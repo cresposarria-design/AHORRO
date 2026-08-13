@@ -1,69 +1,69 @@
 <!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#247a4d"><link rel="manifest" href="manifest.json">
-<title>Mi Ahorro</title>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#247a4d"><title>Mi Ahorro</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f4f6f8;color:#18221d;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:560px;margin:auto;padding:18px 16px 90px}.top{display:flex;justify-content:space-between;align-items:center}
-h1{margin:0;font-size:28px}.sub{color:#6c766f;font-size:13px}.card{background:#fff;border-radius:20px;padding:18px;margin-top:14px;box-shadow:0 5px 22px #14201810}
+*{box-sizing:border-box}body{margin:0;background:#f4f6f8;color:#18221d;font-family:system-ui,-apple-system,sans-serif}
+main{max-width:580px;margin:auto;padding:18px 16px 70px}h1{margin:0 0 4px;font-size:28px}.sub,.small{color:#6c766f;font-size:13px}
+.card{background:#fff;border-radius:20px;padding:18px;margin-top:14px;box-shadow:0 5px 22px #14201810}
 .balance{font-size:38px;font-weight:800;margin:5px 0}.green{color:#247a4d}.red{color:#bd3e3e}
-.bar{height:12px;background:#e7ebe8;border-radius:20px;overflow:hidden;margin:12px 0}.fill{height:100%;background:#247a4d;width:0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f6f8f6;padding:13px;border-radius:15px}.stat b{display:block;font-size:19px;margin-top:3px}
 input,select{width:100%;padding:12px;border:1px solid #d7ddd9;border-radius:11px;font-size:16px;background:white;margin:6px 0 10px}
-button{border:0;border-radius:12px;padding:12px 15px;background:#247a4d;color:#fff;font-weight:700;font-size:15px}.secondary{background:#e9efeb;color:#1e5135}
-.row{display:flex;gap:8px}.row>*{flex:1}
-.item{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #edf0ee;padding:12px 0}.item:first-child{border-top:0}
-.badge{font-size:12px;background:#eef3ef;padding:5px 8px;border-radius:20px}.empty{text-align:center;color:#778078;padding:15px}
-.small{font-size:12px;color:#717b74}
-</style></head>
-<body><main>
-<div class="top"><div><h1>Mi Ahorro 💰</h1><div class="sub">Controla tus ingresos y gastos</div></div></div>
-
-<section class="card">
-<div class="sub">Disponible este mes</div><div id="available" class="balance">0 €</div>
-<div class="grid">
-<div class="stat"><span class="sub">Ingresos</span><b id="income">0 €</b></div>
-<div class="stat"><span class="sub">Gastos</span><b id="expense">0 €</b></div>
-</div></section>
-
-<section class="card">
-<h3>🎯 Objetivo de ahorro</h3>
-<label class="sub">Objetivo (€)</label><input id="goal" type="number" step=".01" min="0" value="5000">
-<label class="sub">Ahorro acumulado (€)</label><input id="saved" type="number" step=".01" min="0" value="0">
-<button onclick="saveGoal()">Guardar objetivo</button>
-<div class="bar"><div id="fill" class="fill"></div></div><div id="goalText" class="small"></div>
-</section>
-
-<section class="card">
-<h3>➕ Añadir movimiento</h3>
+button{border:0;border-radius:12px;padding:9px 12px;background:#247a4d;color:#fff;font-weight:700;font-size:14px;margin:2px}.secondary{background:#e9eeeb;color:#1c3327}.danger{background:#bd3e3e}
+.row{display:flex;gap:8px}.row>*{flex:1}.bar{height:12px;background:#e7ebe8;border-radius:20px;overflow:hidden;margin:12px 0}.fill{height:100%;background:#247a4d;width:0}
+.alert{padding:12px;border-radius:12px;background:#fff3dc;color:#8a5600;margin-top:10px;font-weight:700}.dangerbox{background:#ffe4e4;color:#9b2525}
+.item{border-top:1px solid #edf0ee;padding:12px 0}.itemtop{display:flex;justify-content:space-between;gap:8px}.actions{text-align:right;margin-top:6px}.badge{font-size:12px;background:#eef3ef;padding:5px 8px;border-radius:20px}
+canvas{width:100%;height:230px}
+</style></head><body><main>
+<h1>Mi Ahorro 💰</h1><div class="sub">Controla ingresos, gastos, límites y objetivos</div>
+<section class="card"><div class="sub">Disponible</div><div id="available" class="balance">0 €</div>
+<div class="grid"><div class="stat"><span class="sub">Ingresos</span><b id="income">0 €</b></div><div class="stat"><span class="sub">Gastos</span><b id="expense">0 €</b></div></div><div id="alert"></div></section>
+<section class="card"><h3>🎯 Objetivo de ahorro</h3><label class="sub">Objetivo (€)</label><input id="goal" type="number">
+<label class="sub">Ahorro acumulado (€)</label><input id="saved" type="number"><button onclick="saveGoal()">Guardar objetivo</button>
+<div class="bar"><div id="fill" class="fill"></div></div><div id="goalText" class="small"></div></section>
+<section class="card"><h3>🚦 Límite de gasto</h3><label class="sub">Límite mensual (€)</label><input id="limit" type="number">
+<label class="sub">Avisar al alcanzar (%)</label><input id="warn" type="number" min="1" max="100"><button onclick="saveLimit()">Guardar límite</button>
+<div id="limitText" class="small"></div></section>
+<section class="card"><h3>📊 Gastos por categoría</h3><canvas id="chart" width="520" height="230"></canvas></section>
+<section class="card"><h3 id="formTitle">➕ Añadir movimiento</h3>
 <select id="type"><option value="income">Ingreso</option><option value="expense">Gasto</option></select>
 <input id="desc" placeholder="Ej.: supermercado, nómina...">
-<div class="row"><input id="amount" type="number" min="0" step=".01" placeholder="Importe €">
-<select id="cat"><option>Vivienda</option><option>Alimentación</option><option>Transporte</option><option>Ocio</option><option>Compras</option><option>Salud</option><option>Servicios</option><option>Otros</option></select></div>
-<button onclick="add()">Añadir movimiento</button>
-</section>
-
+<div class="row"><input id="amount" type="number" placeholder="Importe €"><select id="cat"><option>Vivienda</option><option>Alimentación</option><option>Transporte</option><option>Ocio</option><option>Compras</option><option>Salud</option><option>Servicios</option><option>Otros</option></select></div>
+<button id="saveMove" onclick="saveMove()">Añadir movimiento</button><button id="cancelEdit" class="secondary" onclick="cancelEdit()" style="display:none">Cancelar</button></section>
 <section class="card"><h3>📋 Movimientos</h3><div id="list"></div></section>
 </main>
 <script>
-const K="miAhorroV2";let d=JSON.parse(localStorage.getItem(K)||'{"goal":5000,"saved":0,"moves":[]}');
-const euro=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR'}).format(n);
-function persist(){localStorage.setItem(K,JSON.stringify(d));render()}
+let d=JSON.parse(localStorage.getItem("miAhorro")||'{"goal":5000,"saved":0,"limit":1200,"warn":80,"moves":[]}');
+let editIndex=null;
+const euro=n=>new Intl.NumberFormat("es-ES",{style:"currency",currency:"EUR"}).format(n);
+function persist(){localStorage.setItem("miAhorro",JSON.stringify(d));render()}
 function saveGoal(){d.goal=+goal.value||0;d.saved=+saved.value||0;persist()}
-function add(){let a=+amount.value||0, x=desc.value.trim();if(!a||!x)return;
-d.moves.unshift({type:type.value,desc:x,amount:a,cat:cat.value,date:new Date().toLocaleDateString('es-ES')});
-desc.value="";amount.value="";persist()}
-function del(i){d.moves.splice(i,1);persist()}
+function saveLimit(){d.limit=+limit.value||0;d.warn=+warn.value||80;persist()}
+function saveMove(){
+ let a=+amount.value||0,x=desc.value.trim();if(!a||!x)return;
+ let obj={type:type.value,desc:x,amount:a,cat:cat.value,date:editIndex===null?new Date().toLocaleDateString("es-ES"):d.moves[editIndex].date};
+ if(editIndex===null)d.moves.unshift(obj);else d.moves[editIndex]=obj;
+ cancelEdit();persist()
+}
+function editMove(i){let x=d.moves[i];editIndex=i;type.value=x.type;desc.value=x.desc;amount.value=x.amount;cat.value=x.cat;formTitle.textContent="✏️ Editar movimiento";saveMove.textContent="Guardar cambios";cancelEdit.style.display="inline-block";window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})}
+function cancelEdit(){editIndex=null;type.value="income";desc.value="";amount.value="";formTitle.textContent="➕ Añadir movimiento";saveMove.textContent="Añadir movimiento";cancelEdit.style.display="none"}
+function del(i){if(confirm("¿Borrar este movimiento?")){d.moves.splice(i,1);persist()}}
+function drawChart(groups){
+ const c=document.getElementById("chart"),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);
+ let names=Object.keys(groups),vals=Object.values(groups),max=Math.max(...vals,1),left=55,bottom=35,top=15,usable=h-top-bottom;
+ if(!names.length){ctx.fillStyle="#6c766f";ctx.font="15px system-ui";ctx.textAlign="center";ctx.fillText("Añade gastos para ver el gráfico",w/2,h/2);return}
+ let step=(w-left-20)/names.length,barW=Math.max(18,step-12);
+ ctx.strokeStyle="#d9dfda";ctx.beginPath();ctx.moveTo(left,top);ctx.lineTo(left,h-bottom);ctx.lineTo(w-10,h-bottom);ctx.stroke();
+ names.forEach((n,i)=>{let x=left+10+i*step,bh=usable*groups[n]/max,y=h-bottom-bh;ctx.fillStyle="#247a4d";ctx.fillRect(x,y,barW,bh);ctx.fillStyle="#47524b";ctx.font="10px system-ui";ctx.textAlign="center";ctx.fillText(n.slice(0,9),x+barW/2,h-12);ctx.fillText(euro(groups[n]),x+barW/2,Math.max(12,y-5))})
+}
 function render(){
-goal.value=d.goal;saved.value=d.saved;
-let inc=d.moves.filter(x=>x.type==="income").reduce((s,x)=>s+x.amount,0), exp=d.moves.filter(x=>x.type==="expense").reduce((s,x)=>s+x.amount,0);
-income.textContent=euro(inc);expense.textContent=euro(exp);available.textContent=euro(inc-exp);
-available.className="balance "+(inc-exp<0?"red":"green");
-let p=d.goal?Math.min(100,d.saved/d.goal*100):0;fill.style.width=p+"%";goalText.textContent=`${p.toFixed(0)}% conseguido · faltan ${euro(Math.max(0,d.goal-d.saved))}`;
-list.innerHTML=d.moves.length?d.moves.map((x,i)=>`<div class="item"><div><b>${x.desc}</b><div class="small">${x.date} · <span class="badge">${x.cat}</span></div></div><div style="text-align:right"><b class="${x.type==='income'?'green':'red'}">${x.type==='income'?'+':'-'}${euro(x.amount)}</b><br><button class="secondary" onclick="del(${i})">Borrar</button></div></div>`).join(""):'<div class="empty">Todavía no hay movimientos.</div>';
+ goal.value=d.goal;saved.value=d.saved;limit.value=d.limit;warn.value=d.warn;
+ let inc=d.moves.filter(x=>x.type==="income").reduce((s,x)=>s+x.amount,0),exp=d.moves.filter(x=>x.type==="expense").reduce((s,x)=>s+x.amount,0);
+ income.textContent=euro(inc);expense.textContent=euro(exp);available.textContent=euro(inc-exp);available.className="balance "+(inc-exp<0?"red":"green");
+ let p=d.goal?Math.min(100,d.saved/d.goal*100):0;fill.style.width=p+"%";goalText.textContent=p.toFixed(0)+"% conseguido · faltan "+euro(Math.max(0,d.goal-d.saved));
+ let pct=d.limit?exp/d.limit*100:0;alert.innerHTML=pct>=100?`<div class="alert dangerbox">🚨 Has superado tu límite: ${euro(exp)} de ${euro(d.limit)}.</div>`:pct>=d.warn?`<div class="alert">⚠️ Has usado el ${pct.toFixed(0)}% de tu límite.</div>`:"";limitText.textContent=`Has gastado ${euro(exp)} de ${euro(d.limit)} (${pct.toFixed(0)}%).`;
+ let groups={};d.moves.filter(x=>x.type==="expense").forEach(x=>groups[x.cat]=(groups[x.cat]||0)+x.amount);drawChart(groups);
+ list.innerHTML=d.moves.length?d.moves.map((x,i)=>`<div class="item"><div class="itemtop"><div><b>${x.desc}</b><div class="small">${x.date} · ${x.cat}</div></div><b class="${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"-"}${euro(x.amount)}</b></div><div class="actions"><button class="secondary" onclick="editMove(${i})">✏️ Editar</button><button class="danger" onclick="del(${i})">🗑️ Borrar</button></div></div>`).join(""):"<div class='small'>Todavía no hay movimientos.</div>";
 }
 render();
-if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
 </script></body></html>
