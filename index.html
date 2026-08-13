@@ -24,7 +24,12 @@ canvas{width:100%;height:230px}
 <section class="card"><h3>🚦 Límite de gasto</h3><label class="sub">Límite mensual (€)</label><input id="limit" type="number">
 <label class="sub">Avisar al alcanzar (%)</label><input id="warn" type="number" min="1" max="100"><button onclick="saveLimit()">Guardar límite</button>
 <div id="limitText" class="small"></div></section>
-<section class="card"><h3>📊 Gastos por categoría</h3><canvas id="chart" width="520" height="230"></canvas></section>
+<section class="card" style="padding:0;overflow:hidden">
+<details>
+<summary style="padding:18px;font-size:18px;font-weight:800;cursor:pointer;list-style:none">📊 Gastos por categoría <span style="float:right">⌄</span></summary>
+<div style="padding:0 18px 18px"><canvas id="chart" width="520" height="230"></canvas></div>
+</details>
+</section>
 <section class="card"><h3 id="formTitle">➕ Añadir movimiento</h3>
 <select id="type"><option value="income">Ingreso</option><option value="expense">Gasto</option></select>
 <input id="desc" placeholder="Ej.: supermercado, nómina...">
