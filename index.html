@@ -1,1 +1,367 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#247a4d">
+<title>Mi Ahorro 💰</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6f8;color:#18221d;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:620px;margin:auto;padding:18px 14px 80px}
+h1{margin:0 0 4px;font-size:28px}
+h2{font-size:20px;margin:0}
+.card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 10px #00000010}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#f1f5f3;border-radius:12px;padding:12px}
+.stat b{display:block;font-size:20px;margin-top:5px}
+details{background:#fff;border-radius:16px;margin:12px 0;box-shadow:0 2px 10px #00000010}
+summary{cursor:pointer;list-style:none;padding:16px;font-weight:700;font-size:19px}
+summary::-webkit-details-marker{display:none}
+.content{padding:0 16px 16px}
+label{display:block;font-size:14px;font-weight:650;margin:10px 0 5px}
+input,select,button{width:100%;font:inherit;border-radius:10px;padding:11px;border:1px solid #cfd7d2;background:#fff}
+button{border:0;background:#247a4d;color:#fff;font-weight:700;cursor:pointer}
+button.secondary{background:#e8eeeb;color:#18221d}
+button.danger{background:#c93b3b}
+button.small{width:auto;padding:7px 10px;font-size:13px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:flex;gap:8px;margin-top:12px}
+.actions>*{flex:1}
+.movement{border-top:1px solid #e1e6e3;padding:12px 0}
+.movement:first-child{border-top:0}
+.income{color:#16834d}.expense{color:#c13c3c}
+.movement-top{display:flex;justify-content:space-between;gap:10px}
+.movement small{color:#65716b}
+.bar{height:12px;background:#e7ece9;border-radius:20px;overflow:hidden;margin:5px 0 10px}
+.bar i{display:block;height:100%;background:#247a4d}
+.notice{padding:10px;border-radius:10px;background:#fff4cf;margin-top:10px}
+.empty{color:#69756f;text-align:center;padding:15px}
+.fixed-item{display:grid;grid-template-columns:1fr 120px;gap:8px;align-items:end;margin-bottom:8px}
+.backup{display:grid;gap:8px}
+@media(max-width:430px){.summary{grid-template-columns:1fr}.row{grid-template-columns:1fr}.fixed-item{grid-template-columns:1fr 110px}}
+</style>
+</head>
+<body>
+<main>
+<header class="card">
+<h1>Mi Ahorro 💰</h1>
+<div>Controla tus ingresos y gastos</div>
+</header>
 
+<section class="card">
+<h2>Resumen</h2>
+<div class="summary" style="margin-top:10px">
+<div class="stat">Disponible<b id="balance">0,00 €</b></div>
+<div class="stat">Ingresos<b id="incomeTotal">0,00 €</b></div>
+<div class="stat">Gastos<b id="expenseTotal">0,00 €</b></div>
+</div>
+</section>
+
+<details open>
+<summary>💸 Gastos variables</summary>
+<div class="content">
+<div class="row">
+<div>
+<label for="type">Tipo</label>
+<select id="type">
+<option value="expense">Gasto</option>
+<option value="income">Ingreso</option>
+</select>
+</div>
+<div>
+<label for="amount">Importe (€)</label>
+<input id="amount" type="number" step="0.01" min="0" placeholder="0,00">
+</div>
+</div>
+
+<label for="description">Descripción</label>
+<input id="description" type="text" placeholder="Ej. Compra, nómina, Bizum...">
+
+<label for="category">Categoría</label>
+<select id="category"></select>
+
+<div class="actions">
+<button id="addBtn">Añadir movimiento</button>
+<button id="cancelBtn" class="secondary" type="button" style="display:none">Cancelar</button>
+</div>
+
+<div id="formMessage"></div>
+</div>
+</details>
+
+<details>
+<summary>🔒 Gastos fijos</summary>
+<div class="content">
+<p>Se descuentan automáticamente una vez al mes cuando tienen un importe.</p>
+<div id="fixedList"></div>
+<button id="applyFixedBtn" class="secondary">Aplicar gastos fijos de este mes</button>
+<div id="fixedMessage"></div>
+</div>
+</details>
+
+<details>
+<summary>🎯 Objetivo de ahorro</summary>
+<div class="content">
+<div class="row">
+<div>
+<label for="goal">Objetivo (€)</label>
+<input id="goal" type="number" min="0" step="0.01">
+</div>
+<div>
+<label>Ahorro acumulado</label>
+<input id="saved" type="number" min="0" step="0.01">
+</div>
+</div>
+<button id="saveGoal">Guardar objetivo</button>
+<div id="goalMessage"></div>
+</div>
+</details>
+
+<details>
+<summary>📋 Movimientos</summary>
+<div class="content">
+<div id="movements"></div>
+</div>
+</details>
+
+<details>
+<summary>📊 Gráficos</summary>
+<div class="content">
+<div id="charts"></div>
+</div>
+</details>
+
+<details>
+<summary>🎯 Límite de gasto en Ocio</summary>
+<div class="content">
+<label for="leisureLimit">Límite mensual de Ocio (€)</label>
+<input id="leisureLimit" type="number" min="0" step="0.01" placeholder="0">
+<button id="saveLimit" style="margin-top:10px">Guardar límite</button>
+<div id="limitInfo"></div>
+</div>
+</details>
+
+<details>
+<summary>💾 Copia de seguridad</summary>
+<div class="content backup">
+<p>Guarda una copia de tus datos para poder recuperarlos si cambias de teléfono o navegador.</p>
+<button id="exportBtn">⬇️ Descargar copia</button>
+<input id="importFile" type="file" accept=".json,application/json">
+<button id="clearBtn" class="danger">Borrar todos los datos</button>
+<div id="backupMessage"></div>
+</div>
+</details>
+</main>
+
+<script>
+const KEY="miAhorro_v3";
+
+const expenseCategories=[
+"Supermercado","Ocio","Combustible","Compras varias","Vivienda",
+"Alimentación","Transporte","Compras","Salud","Servicios",
+"Otros","Seguros e impuestos"
+];
+const incomeCategories=["Nómina","Bizum","Otros ingresos"];
+
+const fixedNames=[
+"Hipoteca","Teléfono/TV","Comunidad","Gimnasios","Autocaravana",
+"Particular","Paga Maria","Paga Daniel","Ahorro"
+];
+
+let state=JSON.parse(localStorage.getItem(KEY)||"null")||{
+ movements:[],
+ fixed:{},
+ goal:0,
+ saved:0,
+ leisureLimit:0,
+ appliedMonths:[]
+};
+let editingId=null;
+
+const $=id=>document.getElementById(id);
+const money=n=>Number(n||0).toLocaleString("es-ES",{style:"currency",currency:"EUR"});
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function monthKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+
+function updateCategories(){
+ const type=$("type").value;
+ const cats=type==="expense"?expenseCategories:incomeCategories;
+ $("category").innerHTML=cats.map(c=>`<option>${esc(c)}</option>`).join("");
+}
+$("type").addEventListener("change",updateCategories);
+
+$("addBtn").addEventListener("click",()=>{
+ const amount=Number($("amount").value);
+ const description=$("description").value.trim();
+ const category=$("category").value;
+ if(!amount||amount<0){$("formMessage").innerHTML='<div class="notice">Introduce un importe válido.</div>';return}
+ if(!description){$("formMessage").innerHTML='<div class="notice">Escribe una descripción.</div>';return}
+ if(editingId){
+   const m=state.movements.find(x=>x.id===editingId);
+   if(m){m.type=$("type").value;m.amount=amount;m.description=description;m.category=category}
+ }else{
+   state.movements.push({
+     id:uid(),date:new Date().toISOString(),type:$("type").value,
+     amount,description,category,fixed:false
+   });
+ }
+ editingId=null;
+ $("amount").value="";$("description").value="";
+ $("cancelBtn").style.display="none";$("addBtn").textContent="Añadir movimiento";
+ $("formMessage").innerHTML="";
+ save();
+});
+
+$("cancelBtn").addEventListener("click",clearForm);
+
+function clearForm(){
+ editingId=null;
+ $("amount").value="";$("description").value="";
+ $("cancelBtn").style.display="none";$("addBtn").textContent="Añadir movimiento";
+ $("formMessage").innerHTML="";
+}
+
+function editMove(id){
+ const m=state.movements.find(x=>x.id===id);if(!m)return;
+ editingId=id;$("type").value=m.type;updateCategories();$("category").value=m.category;
+ $("amount").value=m.amount;$("description").value=m.description;
+ $("cancelBtn").style.display="block";$("addBtn").textContent="Guardar cambios";
+ document.querySelector("details").open=true;
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function deleteMove(id){
+ if(!confirm("¿Borrar este movimiento?"))return;
+ state.movements=state.movements.filter(x=>x.id!==id);save();
+}
+window.editMove=editMove;window.deleteMove=deleteMove;
+
+function renderSummary(){
+ const income=state.movements.filter(m=>m.type==="income").reduce((a,m)=>a+m.amount,0);
+ const expense=state.movements.filter(m=>m.type==="expense").reduce((a,m)=>a+m.amount,0);
+ $("incomeTotal").textContent=money(income);
+ $("expenseTotal").textContent=money(expense);
+ $("balance").textContent=money(income-expense);
+}
+
+function renderMovements(){
+ const list=[...state.movements].sort((a,b)=>new Date(b.date)-new Date(a.date));
+ if(!list.length){$("movements").innerHTML='<div class="empty">Todavía no hay movimientos.</div>';return}
+ $("movements").innerHTML=list.map(m=>{
+  const cls=m.type==="income"?"income":"expense";
+  const sign=m.type==="income"?"+":"−";
+  const d=new Date(m.date).toLocaleDateString("es-ES");
+  return `<div class="movement">
+   <div class="movement-top">
+    <div><b>${esc(m.description)}</b><br><small>${esc(m.category)} · ${d}${m.fixed?" · fijo":""}</small></div>
+    <b class="${cls}">${sign}${money(m.amount)}</b>
+   </div>
+   <div class="actions">
+    <button class="secondary small" onclick="editMove('${m.id}')">Editar</button>
+    <button class="danger small" onclick="deleteMove('${m.id}')">Borrar</button>
+   </div>
+  </div>`;
+ }).join("");
+}
+
+function renderFixed(){
+ $("fixedList").innerHTML=fixedNames.map(name=>`
+ <div class="fixed-item">
+  <div><label>${esc(name)}</label></div>
+  <input class="fixedInput" data-name="${esc(name)}" type="number" min="0" step="0.01"
+         value="${Number(state.fixed[name]||0)}" placeholder="0,00">
+ </div>`).join("");
+ document.querySelectorAll(".fixedInput").forEach(i=>i.addEventListener("change",()=>{
+   state.fixed[i.dataset.name]=Number(i.value)||0;save();
+ }));
+}
+
+$("applyFixedBtn").addEventListener("click",()=>{
+ const mk=monthKey();
+ if(state.appliedMonths.includes(mk)){
+   $("fixedMessage").innerHTML='<div class="notice">Los gastos fijos de este mes ya están aplicados.</div>';return;
+ }
+ let count=0;
+ fixedNames.forEach(name=>{
+   const amount=Number(state.fixed[name]||0);
+   if(amount>0){
+     state.movements.push({id:uid(),date:new Date().toISOString(),type:"expense",
+       amount,description:name,category:name==="Ahorro"?"Otros":"Seguros e impuestos",fixed:true});
+     count++;
+   }
+ });
+ state.appliedMonths.push(mk);
+ $("fixedMessage").innerHTML=`<div class="notice">Se han aplicado ${count} gastos fijos.</div>`;
+ save();
+});
+
+$("saveGoal").addEventListener("click",()=>{
+ state.goal=Number($("goal").value)||0;state.saved=Number($("saved").value)||0;
+ $("goalMessage").innerHTML='<div class="notice">Objetivo guardado.</div>';save();
+});
+$("saveLimit").addEventListener("click",()=>{
+ state.leisureLimit=Number($("leisureLimit").value)||0;
+ $("limitInfo").innerHTML='<div class="notice">Límite guardado.</div>';save();
+});
+
+function renderCharts(){
+ const totals={};
+ state.movements.filter(m=>m.type==="expense").forEach(m=>totals[m.category]=(totals[m.category]||0)+m.amount);
+ const rows=Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+ if(!rows.length){$("charts").innerHTML='<div class="empty">Añade gastos para ver el gráfico.</div>';return}
+ const max=Math.max(...rows.map(x=>x[1]),1);
+ $("charts").innerHTML=rows.map(([cat,val])=>`
+  <div><b>${esc(cat)}</b> · ${money(val)}
+  <div class="bar"><i style="width:${val/max*100}%"></i></div></div>`).join("");
+}
+
+function renderLimit(){
+ const spent=state.movements.filter(m=>m.type==="expense"&&m.category==="Ocio"&&
+   new Date(m.date).getMonth()===new Date().getMonth()&&new Date(m.date).getFullYear()===new Date().getFullYear())
+   .reduce((a,m)=>a+m.amount,0);
+ const lim=Number(state.leisureLimit||0);
+ $("leisureLimit").value=lim||"";
+ if(!lim){$("limitInfo").innerHTML="<p>No hay límite configurado.</p>";return}
+ const remaining=lim-spent;
+ $("limitInfo").innerHTML=`<div class="notice">Ocio este mes: <b>${money(spent)}</b> de ${money(lim)}.<br>
+ ${remaining>=0?"Te quedan "+money(remaining):"Has superado el límite en "+money(Math.abs(remaining))}.</div>`;
+}
+
+function renderGoal(){
+ $("goal").value=state.goal||"";
+ $("saved").value=state.saved||"";
+}
+function render(){
+ renderSummary();renderMovements();renderFixed();renderCharts();renderLimit();renderGoal();
+}
+$("exportBtn").addEventListener("click",()=>{
+ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+ a.download="mi-ahorro-copia-"+monthKey()+".json";a.click();URL.revokeObjectURL(a.href);
+});
+$("importFile").addEventListener("change",e=>{
+ const file=e.target.files[0];if(!file)return;
+ const r=new FileReader();
+ r.onload=()=>{
+  try{
+   const data=JSON.parse(r.result);
+   if(!data||!Array.isArray(data.movements))throw Error();
+   state=data;save();
+   $("backupMessage").innerHTML='<div class="notice">Copia restaurada correctamente.</div>';
+  }catch{$("backupMessage").innerHTML='<div class="notice">La copia no es válida.</div>'}
+ };
+ r.readAsText(file);
+});
+$("clearBtn").addEventListener("click",()=>{
+ if(!confirm("¿Seguro que quieres borrar TODOS los datos? Esta acción no se puede deshacer."))return;
+ localStorage.removeItem(KEY);
+ location.reload();
+});
+
+updateCategories();
+render();
+</script>
+</body>
+</html>
