@@ -191,7 +191,7 @@ async function save(){
   render();
 
   try{
-    await fetch(`${SUPABASE_URL}/rest/v1/ahorro?id=eq.${SUPABASE_ROW}`,{
+    await fetch(`${SUPABASE_URL}/rest/v1/ahorro_data?id=eq.${SUPABASE_ROW}`,{
       method:"PATCH",
       headers:{
         "Content-Type":"application/json",
