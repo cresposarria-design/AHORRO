@@ -388,7 +388,7 @@ $("clearBtn").addEventListener("click",()=>{
 async function loadSharedData(){
   try{
     const response=await fetch(
-      `${SUPABASE_URL}/rest/v1/ahorro?id=eq.${SUPABASE_ROW}&select=data`,
+     ${SUPABASE_URL}/rest/v1/ahorro_data?id=eq.${SUPABASE_ROW}&select=data`
       {
         headers:{
           "apikey":SUPABASE_KEY,
