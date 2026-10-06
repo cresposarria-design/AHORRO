@@ -5,416 +5,2260 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#247a4d">
 <title>Mi Ahorro 💰</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f4f6f8;color:#18221d;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:620px;margin:auto;padding:18px 14px 80px}
-h1{margin:0 0 4px;font-size:28px}
-h2{font-size:20px;margin:0}
-.card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 10px #00000010}
-.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{background:#f1f5f3;border-radius:12px;padding:12px}
-.stat b{display:block;font-size:20px;margin-top:5px}
-details{background:#fff;border-radius:16px;margin:12px 0;box-shadow:0 2px 10px #00000010}
-summary{cursor:pointer;list-style:none;padding:16px;font-weight:700;font-size:19px}
-summary::-webkit-details-marker{display:none}
-.content{padding:0 16px 16px}
-label{display:block;font-size:14px;font-weight:650;margin:10px 0 5px}
-input,select,button{width:100%;font:inherit;border-radius:10px;padding:11px;border:1px solid #cfd7d2;background:#fff}
-button{border:0;background:#247a4d;color:#fff;font-weight:700;cursor:pointer}
-button.secondary{background:#e8eeeb;color:#18221d}
-button.danger{background:#c93b3b}
-button.small{width:auto;padding:7px 10px;font-size:13px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.actions{display:flex;gap:8px;margin-top:12px}
-.actions>*{flex:1}
-.movement{border-top:1px solid #e1e6e3;padding:12px 0}
-.movement:first-child{border-top:0}
-.income{color:#16834d}.expense{color:#c13c3c}
-.movement-top{display:flex;justify-content:space-between;gap:10px}
-.movement small{color:#65716b}
-.bar{height:12px;background:#e7ece9;border-radius:20px;overflow:hidden;margin:5px 0 10px}
-.bar i{display:block;height:100%;background:#247a4d}
-.notice{padding:10px;border-radius:10px;background:#fff4cf;margin-top:10px}
-.empty{color:#69756f;text-align:center;padding:15px}
-.fixed-item{display:grid;grid-template-columns:1fr 120px;gap:8px;align-items:end;margin-bottom:8px}
-.backup{display:grid;gap:8px}
-@media(max-width:430px){.summary{grid-template-columns:1fr}.row{grid-template-columns:1fr}.fixed-item{grid-template-columns:1fr 110px}}
+
+body{
+ margin:0;
+ background:#f4f6f8;
+ color:#18221d;
+ font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+
+main{
+ max-width:620px;
+ margin:auto;
+ padding:18px 14px 80px
+}
+
+h1{
+ margin:0 0 4px;
+ font-size:28px
+}
+
+.card{
+ background:#fff;
+ border-radius:16px;
+ padding:16px;
+ margin:12px 0;
+ box-shadow:0 2px 10px #00000010
+}
+
+.summary{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px
+}
+
+.stat{
+ background:#f1f5f3;
+ border-radius:12px;
+ padding:12px
+}
+
+.stat b{
+ display:block;
+ font-size:20px;
+ margin-top:5px
+}
+
+details{
+ background:#fff;
+ border-radius:16px;
+ margin:12px 0;
+ box-shadow:0 2px 10px #00000010
+}
+
+summary{
+ cursor:pointer;
+ list-style:none;
+ padding:16px;
+ font-weight:700;
+ font-size:19px
+}
+
+summary::-webkit-details-marker{
+ display:none
+}
+
+.content{
+ padding:0 16px 16px
+}
+
+label{
+ display:block;
+ font-size:14px;
+ font-weight:650;
+ margin:10px 0 5px
+}
+
+input,select,button{
+ width:100%;
+ font:inherit;
+ border-radius:10px;
+ padding:11px;
+ border:1px solid #cfd7d2;
+ background:#fff
+}
+
+button{
+ border:0;
+ background:#247a4d;
+ color:#fff;
+ font-weight:700;
+ cursor:pointer
+}
+
+button.secondary{
+ background:#e8eeeb;
+ color:#18221d
+}
+
+button.danger{
+ background:#c93b3b
+}
+
+button.small{
+ width:auto;
+ padding:7px 10px;
+ font-size:13px
+}
+
+.row{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px
+}
+
+.actions{
+ display:flex;
+ gap:8px;
+ margin-top:12px
+}
+
+.actions>*{
+ flex:1
+}
+
+.movement{
+ border-top:1px solid #e1e6e3;
+ padding:12px 0
+}
+
+.movement:first-child{
+ border-top:0
+}
+
+.income{
+ color:#16834d
+}
+
+.expense{
+ color:#c13c3c
+}
+
+.movement-top{
+ display:flex;
+ justify-content:space-between;
+ gap:10px
+}
+
+.movement small{
+ color:#65716b
+}
+
+.bar{
+ height:12px;
+ background:#e7ece9;
+ border-radius:20px;
+ overflow:hidden;
+ margin:5px 0 10px
+}
+
+.bar i{
+ display:block;
+ height:100%;
+ background:#247a4d
+}
+
+.notice{
+ padding:10px;
+ border-radius:10px;
+ background:#fff4cf;
+ margin-top:10px
+}
+
+.empty{
+ color:#69756f;
+ text-align:center;
+ padding:15px
+}
+
+.fixed-item{
+ display:grid;
+ grid-template-columns:1fr 120px;
+ gap:8px;
+ align-items:end;
+ margin-bottom:8px
+}
+
+.period-current{
+ font-weight:700;
+ font-size:19px;
+ margin-bottom:5px
+}
+
+.period-note{
+ color:#65716b;
+ font-size:14px;
+ margin-bottom:12px
+}
+
+.period-actions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin-top:10px
+}
+
+.backup{
+ display:grid;
+ gap:8px
+}
+
+@media(max-width:430px){
+ .summary{
+  grid-template-columns:1fr
+ }
+
+ .row{
+  grid-template-columns:1fr
+ }
+
+ .fixed-item{
+  grid-template-columns:1fr 110px
+ }
+}
 </style>
 </head>
+
 <body>
+
 <main>
+
 <header class="card">
 <h1>Mi Ahorro 💰</h1>
 <div>Controla tus ingresos y gastos</div>
 </header>
 
-<details>
-<summary>📋 Resumen</summary>
+
+<!-- MESES -->
+
+<details open>
+
+<summary>📅 Meses</summary>
+
 <div class="content">
-<div class="summary" style="margin-top:10px">
-<div class="stat">Disponible<b id="balance">0,00 €</b></div>
-<div class="stat">Ingresos<b id="incomeTotal">0,00 €</b></div>
-<div class="stat">Gastos<b id="expenseTotal">0,00 €</b></div>
+
+<div class="period-current" id="periodCurrent">
+Mes actual
 </div>
+
+<div class="period-note">
+Inicia cada mes el día que cobres la primera nómina y consulta después cada periodo por separado.
 </div>
+
+<label for="periodSelect">
+Consultar mes
+</label>
+
+<select id="periodSelect"></select>
+
+<div class="period-actions">
+
+<button id="startPeriodBtn">
+➕ Iniciar nuevo mes
+</button>
+
+<button id="todayPeriodBtn" class="secondary">
+Usar hoy
+</button>
+
+</div>
+
+<div id="periodMessage"></div>
+
+</div>
+
 </details>
 
+
+<!-- RESUMEN -->
+
 <details>
-<summary>💸 Gastos variables</summary>
+
+<summary>📋 Resumen</summary>
+
 <div class="content">
+
+<div class="summary" style="margin-top:10px">
+
+<div class="stat">
+Disponible
+<b id="balance">0,00 €</b>
+</div>
+
+<div class="stat">
+Ingresos
+<b id="incomeTotal">0,00 €</b>
+</div>
+
+<div class="stat">
+Gastos
+<b id="expenseTotal">0,00 €</b>
+</div>
+
+</div>
+
+</div>
+
+</details>
+
+
+<!-- GASTOS VARIABLES -->
+
+<details>
+
+<summary>💸 Gastos variables</summary>
+
+<div class="content">
+
 <div class="row">
+
 <div>
-<label for="type">Tipo</label>
+
+<label for="type">
+Tipo
+</label>
+
 <select id="type">
-<option value="expense">Gasto</option>
-<option value="income">Ingreso</option>
+
+<option value="expense">
+Gasto
+</option>
+
+<option value="income">
+Ingreso
+</option>
+
 </select>
+
 </div>
+
+
 <div>
-<label for="amount">Importe (€)</label>
-<input id="amount" type="number" step="0.01" min="0" placeholder="0,00">
-</div>
+
+<label for="amount">
+Importe (€)
+</label>
+
+<input
+id="amount"
+type="number"
+step="0.01"
+min="0"
+placeholder="0,00">
+
 </div>
 
-<label for="description">Descripción</label>
-<input id="description" type="text" placeholder="Ej. Compra, nómina, Bizum...">
+</div>
 
-<label for="category">Categoría</label>
+
+<label for="description">
+Descripción
+</label>
+
+<input
+id="description"
+type="text"
+placeholder="Ej. Compra, nómina, Bizum...">
+
+
+<label for="category">
+Categoría
+</label>
+
 <select id="category"></select>
 
+
 <div class="actions">
-<button id="addBtn">Añadir movimiento</button>
-<button id="cancelBtn" class="secondary" type="button" style="display:none">Cancelar</button>
+
+<button id="addBtn">
+Añadir movimiento
+</button>
+
+<button
+id="cancelBtn"
+class="secondary"
+type="button"
+style="display:none">
+
+Cancelar
+
+</button>
+
 </div>
 
 <div id="formMessage"></div>
+
 </div>
+
 </details>
 
+
+<!-- GASTOS FIJOS -->
+
 <details>
+
 <summary>🔒 Gastos fijos</summary>
+
 <div class="content">
-<p>Se descuentan automáticamente una vez al mes cuando tienen un importe.</p>
+
+<p>
+Los gastos fijos se aplican una sola vez al iniciar cada nuevo mes.
+</p>
+
 <div id="fixedList"></div>
-<button id="applyFixedBtn" class="secondary">Aplicar gastos fijos de este mes</button>
+
+<button
+id="applyFixedBtn"
+class="secondary">
+
+Aplicar gastos fijos de este mes
+
+</button>
+
 <div id="fixedMessage"></div>
+
 </div>
+
 </details>
 
+
+<!-- OBJETIVO -->
+
 <details>
+
 <summary>🎯 Objetivo de ahorro</summary>
+
 <div class="content">
+
 <div class="row">
+
 <div>
-<label for="goal">Objetivo (€)</label>
-<input id="goal" type="number" min="0" step="0.01">
+
+<label for="goal">
+Objetivo (€)
+</label>
+
+<input
+id="goal"
+type="number"
+min="0"
+step="0.01">
+
 </div>
+
 <div>
-<label>Ahorro acumulado</label>
-<input id="saved" type="number" min="0" step="0.01">
+
+<label for="saved">
+Ahorro acumulado
+</label>
+
+<input
+id="saved"
+type="number"
+min="0"
+step="0.01">
+
 </div>
+
 </div>
-<button id="saveGoal">Guardar objetivo</button>
+
+<button id="saveGoal">
+Guardar objetivo
+</button>
+
 <div id="goalMessage"></div>
+
 </div>
+
 </details>
 
+
+<!-- MOVIMIENTOS -->
+
 <details>
+
 <summary>📋 Movimientos</summary>
+
 <div class="content">
+
 <div id="movements"></div>
+
 </div>
+
 </details>
 
+
+<!-- GRAFICOS -->
+
 <details>
+
 <summary>📊 Gráficos</summary>
+
 <div class="content">
+
 <div id="charts"></div>
+
 </div>
+
 </details>
 
+
+<!-- LIMITE OCIO -->
+
 <details>
+
 <summary>🎯 Límite de gasto en Ocio</summary>
+
 <div class="content">
-<label for="leisureLimit">Límite mensual de Ocio (€)</label>
-<input id="leisureLimit" type="number" min="0" step="0.01" placeholder="0">
-<button id="saveLimit" style="margin-top:10px">Guardar límite</button>
+
+<label for="leisureLimit">
+Límite mensual de Ocio (€)
+</label>
+
+<input
+id="leisureLimit"
+type="number"
+min="0"
+step="0.01"
+placeholder="0">
+
+<button
+id="saveLimit"
+style="margin-top:10px">
+
+Guardar límite
+
+</button>
+
 <div id="limitInfo"></div>
+
 </div>
+
 </details>
 
+
+<!-- COPIA -->
+
 <details>
+
 <summary>💾 Copia de seguridad</summary>
+
 <div class="content backup">
-<p>Guarda una copia de tus datos para poder recuperarlos si cambias de teléfono o navegador.</p>
-<button id="exportBtn">⬇️ Descargar copia</button>
-<input id="importFile" type="file" accept=".json,application/json">
-<button id="clearBtn" class="danger">Borrar todos los datos</button>
+
+<p>
+Guarda una copia de tus datos para poder recuperarlos si cambias de teléfono o navegador.
+</p>
+
+<button id="exportBtn">
+⬇️ Descargar copia
+</button>
+
+<input
+id="importFile"
+type="file"
+accept=".json,application/json">
+
+<button
+id="clearBtn"
+class="danger">
+
+Borrar todos los datos
+
+</button>
+
 <div id="backupMessage"></div>
+
 </div>
+
 </details>
+
 </main>
 
+
 <script>
+
 const KEY="miAhorro_v3";
-const SUPABASE_URL="https://vxhndjadfprfmsljlswr.supabase.co";
-const SUPABASE_KEY="sb_publishable_-Gq1SfSjps7j78jo8II3yg_7piMOvbb";
+
+const SUPABASE_URL=
+"https://vxhndjadfprfmsljlswr.supabase.co";
+
+const SUPABASE_KEY=
+"sb_publishable_-Gq1SfSjps7j78jo8II3yg_7piMOvbb";
+
 const SUPABASE_ROW="compartido";
+
+
 const expenseCategories=[
-"Supermercado","Ocio","Combustible","Viajes","Vivienda",
-"Alimentación","Transporte","Compras","Salud","Servicios",
-"Otros","Seguros e impuestos"
+"Supermercado",
+"Ocio",
+"Combustible",
+"Viajes",
+"Vivienda",
+"Alimentación",
+"Transporte",
+"Compras",
+"Salud",
+"Servicios",
+"Otros",
+"Seguros e impuestos"
 ];
-const incomeCategories=["Nómina","Bizum","Otros ingresos"];
+
+const incomeCategories=[
+"Nómina",
+"Bizum",
+"Otros ingresos"
+];
+
 
 const fixedNames=[
-"Hipoteca","Credito Coche","Comunidad","Gimnasios","Autocaravana",
-"Particular","Paga Maria","Paga Daniel","Ahorro"
+"Hipoteca",
+"Credito Coche",
+"Comunidad",
+"Gimnasios",
+"Autocaravana",
+"Particular",
+"Paga Maria",
+"Paga Daniel",
+"Ahorro"
 ];
 
-let state=JSON.parse(localStorage.getItem(KEY)||"null")||{
+
+let state=
+JSON.parse(localStorage.getItem(KEY)||"null")
+||
+{
  movements:[],
  fixed:{},
  goal:0,
  saved:0,
  leisureLimit:0,
- appliedMonths:[]
+ appliedMonths:[],
+ periods:[],
+ activePeriodId:null
 };
+
+
 let editingId=null;
 
-const $=id=>document.getElementById(id);
-const money=n=>Number(n||0).toLocaleString("es-ES",{style:"currency",currency:"EUR"});
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+
+const $=
+id=>document.getElementById(id);
+
+
+const money=
+n=>
+Number(n||0).toLocaleString(
+"es-ES",
+{
+ style:"currency",
+ currency:"EUR"
+});
+
+
+const esc=
+s=>
+String(s??"").replace(
+/[&<>"']/g,
+m=>({
+ "&":"&amp;",
+ "<":"&lt;",
+ ">":"&gt;",
+ '"':"&quot;",
+ "'":"&#039;"
+}[m])
+);
+
+
 async function save(){
-  localStorage.setItem(KEY,JSON.stringify(state));
+
+ localStorage.setItem(
+ KEY,
+ JSON.stringify(state)
+ );
+
+ render();
+
+ try{
+
+ await fetch(
+ `${SUPABASE_URL}/rest/v1/ahorro_data?id=eq.${SUPABASE_ROW}`,
+ {
+  method:"PATCH",
+
+  headers:{
+   "Content-Type":"application/json",
+   "apikey":SUPABASE_KEY,
+   "Authorization":`Bearer ${SUPABASE_KEY}`,
+   "Prefer":"return=minimal"
+  },
+
+  body:JSON.stringify({
+   data:state,
+   updated_at:new Date().toISOString()
+  })
+ }
+ );
+
+ }catch(e){
+
+ console.error(
+ "Error guardando en Supabase:",
+ e
+ );
+
+ }
+
+}
+
+
+function monthKey(){
+
+ const d=new Date();
+
+ return d.getFullYear()
+ +"-
+ "+String(d.getMonth()+1).padStart(2,"0");
+
+}
+
+
+function uid(){
+
+ return Date.now().toString(36)
+ +Math.random().toString(36).slice(2);
+
+}
+
+
+/* =========================
+   SISTEMA DE MESES
+========================= */
+
+
+function formatDateShort(iso){
+
+ const d=new Date(iso);
+
+ return d.toLocaleDateString(
+ "es-ES",
+ {
+  day:"numeric",
+  month:"short",
+  year:"numeric"
+ }
+ );
+
+}
+
+
+function periodDefaultLabel(iso){
+
+ const d=new Date(iso);
+
+ return "Mes desde "+
+ d.toLocaleDateString(
+ "es-ES",
+ {
+  day:"numeric",
+  month:"long",
+  year:"numeric"
+ }
+ );
+
+}
+
+
+function ensurePeriods(){
+
+ if(!Array.isArray(state.periods))
+ state.periods=[];
+
+
+ /*
+ Si es una versión antigua de Mi Ahorro,
+ creamos un primer periodo con todos
+ los movimientos existentes.
+ */
+
+ if(!state.periods.length){
+
+  const id="period-"+uid();
+
+  let firstDate;
+
+  if(state.movements.length){
+
+   firstDate=
+   [...state.movements]
+   .sort(
+    (a,b)=>
+    new Date(a.date)-new Date(b.date)
+   )[0].date;
+
+  }else{
+
+   firstDate=
+   new Date().toISOString();
+
+  }
+
+
+  state.periods=[
+   {
+    id:id,
+    label:periodDefaultLabel(firstDate),
+    startDate:firstDate,
+    fixedApplied:false,
+    createdAt:new Date().toISOString()
+   }
+  ];
+
+
+  state.activePeriodId=id;
+
+
+  state.movements.forEach(
+   m=>{
+    if(!m.periodId)
+    m.periodId=id;
+   }
+  );
+
+ }
+
+
+ if(
+ !state.activePeriodId ||
+ !state.periods.some(
+  p=>p.id===state.activePeriodId
+ )
+ ){
+
+  state.activePeriodId=
+  state.periods[
+   state.periods.length-1
+  ].id;
+
+ }
+
+
+ /*
+ Cualquier movimiento antiguo
+ que no tenga periodo se asigna
+ al primer periodo.
+ */
+
+ state.movements.forEach(
+  m=>{
+   if(!m.periodId)
+   m.periodId=
+   state.periods[0].id;
+  }
+ );
+
+}
+
+
+function getActivePeriod(){
+
+ ensurePeriods();
+
+ return state.periods.find(
+  p=>p.id===state.activePeriodId
+ )
+ ||
+ state.periods[0];
+
+}
+
+
+function periodMovements(){
+
+ const p=getActivePeriod();
+
+ return state.movements.filter(
+  m=>m.periodId===p.id
+ );
+
+}
+
+
+function periodRangeText(period){
+
+ const sorted=
+ [...state.periods]
+ .sort(
+  (a,b)=>
+  new Date(a.startDate)
+  -
+  new Date(b.startDate)
+ );
+
+
+ const index=
+ sorted.findIndex(
+  p=>p.id===period.id
+ );
+
+
+ const next=
+ index>=0
+ ?
+ sorted[index+1]
+ :
+ null;
+
+
+ if(next){
+
+  const end=
+  new Date(
+   new Date(next.startDate).getTime()
+   -
+   86400000
+  );
+
+
+  return
+  formatDateShort(period.startDate)
+  +" – "
+  +formatDateShort(end);
+
+ }
+
+
+ return
+ "Desde "
+ +formatDateShort(period.startDate);
+
+}
+
+
+function renderPeriods(){
+
+ ensurePeriods();
+
+
+ const sorted=
+ [...state.periods]
+ .sort(
+  (a,b)=>
+  new Date(b.startDate)
+  -
+  new Date(a.startDate)
+ );
+
+
+ $("periodSelect").innerHTML=
+ sorted
+ .map(
+  p=>
+  "<option value='"
+  +esc(p.id)
+  +"'>"
+  +esc(p.label)
+  +" · "
+  +periodRangeText(p)
+  +"</option>"
+ )
+ .join("");
+
+
+ $("periodSelect").value=
+ state.activePeriodId;
+
+
+ $("periodCurrent").textContent=
+ getActivePeriod().label;
+
+}
+
+
+function applyFixedToPeriod(period){
+
+ if(period.fixedApplied)
+ return false;
+
+
+ let count=0;
+
+
+ fixedNames.forEach(
+  name=>{
+
+   const amount=
+   Number(state.fixed[name]||0);
+
+
+   if(amount>0){
+
+    state.movements.push({
+
+     id:uid(),
+
+     date:period.startDate,
+
+     type:"expense",
+
+     amount:amount,
+
+     description:name,
+
+     category:
+     name==="Ahorro"
+     ?
+     "Otros"
+     :
+     "Seguros e impuestos",
+
+     fixed:true,
+
+     periodId:period.id
+
+    });
+
+    count++;
+
+   }
+
+  }
+ );
+
+
+ period.fixedApplied=true;
+
+
+ return count;
+
+}
+
+
+function startNewPeriod(dateText){
+
+ let textDate;
+
+
+ if(dateText){
+
+  textDate=dateText;
+
+ }else{
+
+  textDate=
+  prompt(
+   "¿Qué fecha inicia este mes? Usa AAAA-MM-DD.",
+   new Date().toISOString().slice(0,10)
+  );
+
+ }
+
+
+ if(textDate===null ||
+ textDate===undefined ||
+ !String(textDate).trim())
+ return;
+
+
+ textDate=
+ String(textDate).trim();
+
+
+ if(
+ !/^\d{4}-\d{2}-\d{2}$/.test(textDate)
+ ){
+
+  $("periodMessage").innerHTML=
+  '<div class="notice">'+
+  'Fecha no válida. Usa AAAA-MM-DD.'+
+  '</div>';
+
+  return;
+
+ }
+
+
+ const d=
+ new Date(
+  textDate+"T00:00:00"
+ );
+
+
+ if(Number.isNaN(d.getTime())){
+
+  $("periodMessage").innerHTML=
+  '<div class="notice">'+
+  'Fecha no válida.'+
+  '</div>';
+
+  return;
+
+ }
+
+
+ ensurePeriods();
+
+
+ const existing=
+ state.periods.find(
+  p=>p.startDate.slice(0,10)===textDate
+ );
+
+
+ if(existing){
+
+  state.activePeriodId=
+  existing.id;
+
   render();
 
-  try{
-    await fetch(`${SUPABASE_URL}/rest/v1/ahorro_data?id=eq.${SUPABASE_ROW}`,{
-      method:"PATCH",
-      headers:{
-        "Content-Type":"application/json",
-        "apikey":SUPABASE_KEY,
-        "Authorization":`Bearer ${SUPABASE_KEY}`,
-        "Prefer":"return=minimal"
-      },
-      body:JSON.stringify({
-        data:state,
-        updated_at:new Date().toISOString()
-      })
-    });
-  }catch(e){
-    console.error("Error guardando en Supabase:",e);
-  }
+  $("periodMessage").innerHTML=
+  '<div class="notice">'+
+  'Ese mes ya existe y ahora está seleccionado.'+
+  '</div>';
+
+  return;
+
+ }
+
+
+ const period={
+
+  id:"period-"+uid(),
+
+  label:
+  periodDefaultLabel(
+   d.toISOString()
+  ),
+
+  startDate:
+  d.toISOString(),
+
+  fixedApplied:false,
+
+  createdAt:
+  new Date().toISOString()
+
+ };
+
+
+ state.periods.push(period);
+
+
+ state.activePeriodId=
+ period.id;
+
+
+ const count=
+ applyFixedToPeriod(period);
+
+
+ $("periodMessage").innerHTML=
+ '<div class="notice">'+
+ 'Nuevo mes iniciado. '+
+ count+
+ ' gastos fijos añadidos.'+
+ '</div>';
+
+
+ save();
+
 }
-function monthKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+
+
+/* Selector de meses */
+
+$("periodSelect")
+.addEventListener(
+ "change",
+ e=>{
+
+  state.activePeriodId=
+  e.target.value;
+
+  render();
+
+ }
+);
+
+
+/* Iniciar mes manualmente */
+
+$("startPeriodBtn")
+.addEventListener(
+ "click",
+ ()=>{
+  startNewPeriod();
+ }
+);
+
+
+/* Iniciar mes hoy */
+
+$("todayPeriodBtn")
+.addEventListener(
+ "click",
+ ()=>{
+
+  startNewPeriod(
+   new Date()
+   .toISOString()
+   .slice(0,10)
+  );
+
+ }
+);
+
+
+/* =========================
+   CATEGORÍAS
+========================= */
+
 
 function updateCategories(){
- const type=$("type").value;
- const cats=type==="expense"?expenseCategories:incomeCategories;
- $("category").innerHTML=cats.map(c=>`<option>${esc(c)}</option>`).join("");
+
+ const type=
+ $("type").value;
+
+ const cats=
+ type==="expense"
+ ?
+ expenseCategories
+ :
+ incomeCategories;
+
+
+ $("category").innerHTML=
+ cats
+ .map(
+  c=>"<option>"+
+  esc(c)+
+  "</option>"
+ )
+ .join("");
+
 }
-$("type").addEventListener("change",updateCategories);
 
-$("addBtn").addEventListener("click",()=>{
- const amount=Number($("amount").value);
- const description=$("description").value.trim();
- const category=$("category").value;
- if(!amount||amount<0){$("formMessage").innerHTML='<div class="notice">Introduce un importe válido.</div>';return}
- if(!description){$("formMessage").innerHTML='<div class="notice">Escribe una descripción.</div>';return}
- if(editingId){
-   const m=state.movements.find(x=>x.id===editingId);
-   if(m){m.type=$("type").value;m.amount=amount;m.description=description;m.category=category}
- }else{
+
+$("type")
+.addEventListener(
+ "change",
+ updateCategories
+);
+
+
+/* =========================
+   MOVIMIENTOS
+========================= */
+
+
+$("addBtn")
+.addEventListener(
+ "click",
+ ()=>{
+
+  const amount=
+  Number($("amount").value);
+
+  const description=
+  $("description")
+  .value
+  .trim();
+
+  const category=
+  $("category").value;
+
+
+  if(!amount || amount<0){
+
+   $("formMessage").innerHTML=
+   '<div class="notice">'+
+   'Introduce un importe válido.'+
+   '</div>';
+
+   return;
+
+  }
+
+
+  if(!description){
+
+   $("formMessage").innerHTML=
+   '<div class="notice">'+
+   'Escribe una descripción.'+
+   '</div>';
+
+   return;
+
+  }
+
+
+  if(editingId){
+
+   const m=
+   state.movements.find(
+    x=>x.id===editingId
+   );
+
+
+   if(m){
+
+    m.type=
+    $("type").value;
+
+    m.amount=
+    amount;
+
+    m.description=
+    description;
+
+    m.category=
+    category;
+
+   }
+
+  }else{
+
    state.movements.push({
-     id:uid(),date:new Date().toISOString(),type:$("type").value,
-     amount,description,category,fixed:false
-   });
- }
- editingId=null;
- $("amount").value="";$("description").value="";
- $("cancelBtn").style.display="none";$("addBtn").textContent="Añadir movimiento";
- $("formMessage").innerHTML="";
- save();
-});
 
-$("cancelBtn").addEventListener("click",clearForm);
+    id:uid(),
+
+    date:
+    new Date().toISOString(),
+
+    type:
+    $("type").value,
+
+    amount:amount,
+
+    description:
+    description,
+
+    category:
+    category,
+
+    fixed:false,
+
+    periodId:
+    getActivePeriod().id
+
+   });
+
+  }
+
+
+  editingId=null;
+
+
+  $("amount").value="";
+
+  $("description").value="";
+
+
+  $("cancelBtn")
+  .style.display="none";
+
+
+  $("addBtn")
+  .textContent=
+  "Añadir movimiento";
+
+
+  $("formMessage").innerHTML="";
+
+
+  save();
+
+ }
+);
+
+
+$("cancelBtn")
+.addEventListener(
+ "click",
+ clearForm
+);
+
 
 function clearForm(){
+
  editingId=null;
- $("amount").value="";$("description").value="";
- $("cancelBtn").style.display="none";$("addBtn").textContent="Añadir movimiento";
+
+ $("amount").value="";
+
+ $("description").value="";
+
+ $("cancelBtn")
+ .style.display="none";
+
+ $("addBtn")
+ .textContent=
+ "Añadir movimiento";
+
  $("formMessage").innerHTML="";
+
 }
+
 
 function editMove(id){
- const m=state.movements.find(x=>x.id===id);if(!m)return;
- editingId=id;$("type").value=m.type;updateCategories();$("category").value=m.category;
- $("amount").value=m.amount;$("description").value=m.description;
- $("cancelBtn").style.display="block";$("addBtn").textContent="Guardar cambios";
- document.querySelector("details").open=true;
- window.scrollTo({top:0,behavior:"smooth"});
+
+ const m=
+ state.movements.find(
+  x=>x.id===id
+ );
+
+
+ if(!m)
+ return;
+
+
+ editingId=id;
+
+
+ $("type").value=
+ m.type;
+
+
+ updateCategories();
+
+
+ $("category").value=
+ m.category;
+
+
+ $("amount").value=
+ m.amount;
+
+
+ $("description").value=
+ m.description;
+
+
+ $("cancelBtn")
+ .style.display="block";
+
+
+ $("addBtn")
+ .textContent=
+ "Guardar cambios";
+
+
+ document
+ .querySelector("details")
+ .open=true;
+
+
+ window.scrollTo(
+  {
+   top:0,
+   behavior:"smooth"
+  }
+ );
+
 }
+
+
 function deleteMove(id){
- if(!confirm("¿Borrar este movimiento?"))return;
- state.movements=state.movements.filter(x=>x.id!==id);save();
+
+ if(
+ !confirm(
+  "¿Borrar este movimiento?"
+ )
+ )
+ return;
+
+
+ state.movements=
+ state.movements.filter(
+  x=>x.id!==id
+ );
+
+
+ save();
+
 }
-window.editMove=editMove;window.deleteMove=deleteMove;
+
+
+window.editMove=
+editMove;
+
+window.deleteMove=
+deleteMove;
+
+
+/* =========================
+   RESUMEN
+========================= */
+
 
 function renderSummary(){
- const income=state.movements.filter(m=>m.type==="income").reduce((a,m)=>a+m.amount,0);
- const expense=state.movements.filter(m=>m.type==="expense").reduce((a,m)=>a+m.amount,0);
- $("incomeTotal").textContent=money(income);
- $("expenseTotal").textContent=money(expense);
- $("balance").textContent=money(income-expense);
+
+ const list=
+ periodMovements();
+
+
+ const income=
+ list
+ .filter(m=>m.type==="income")
+ .reduce(
+  (a,m)=>a+m.amount,
+  0
+ );
+
+
+ const expense=
+ list
+ .filter(m=>m.type==="expense")
+ .reduce(
+  (a,m)=>a+m.amount,
+  0
+ );
+
+
+ $("incomeTotal")
+ .textContent=
+ money(income);
+
+
+ $("expenseTotal")
+ .textContent=
+ money(expense);
+
+
+ $("balance")
+ .textContent=
+ money(income-expense);
+
 }
+
+
+/* =========================
+   MOVIMIENTOS
+========================= */
+
 
 function renderMovements(){
- const list=[...state.movements].sort((a,b)=>new Date(b.date)-new Date(a.date));
- if(!list.length){$("movements").innerHTML='<div class="empty">Todavía no hay movimientos.</div>';return}
- $("movements").innerHTML=list.map(m=>{
-  const cls=m.type==="income"?"income":"expense";
-  const sign=m.type==="income"?"+":"−";
-  const d=new Date(m.date).toLocaleDateString("es-ES");
-  return `<div class="movement">
-   <div class="movement-top">
-    <div><b>${esc(m.description)}</b><br><small>${esc(m.category)} · ${d}${m.fixed?" · fijo":""}</small></div>
-    <b class="${cls}">${sign}${money(m.amount)}</b>
+
+ const list=
+ [...periodMovements()]
+ .sort(
+  (a,b)=>
+  new Date(b.date)
+  -
+  new Date(a.date)
+ );
+
+
+ if(!list.length){
+
+  $("movements").innerHTML=
+  '<div class="empty">'+
+  'Todavía no hay movimientos en este mes.'+
+  '</div>';
+
+  return;
+
+ }
+
+
+ $("movements").innerHTML=
+ list
+ .map(
+  m=>{
+
+   const cls=
+   m.type==="income"
+   ?
+   "income"
+   :
+   "expense";
+
+
+   const sign=
+   m.type==="income"
+   ?
+   "+"
+   :
+   "−";
+
+
+   const d=
+   new Date(m.date)
+   .toLocaleDateString(
+    "es-ES"
+   );
+
+
+   return `
+   <div class="movement">
+
+    <div class="movement-top">
+
+     <div>
+
+      <b>
+       ${esc(m.description)}
+      </b>
+
+      <br>
+
+      <small>
+       ${esc(m.category)}
+       ·
+       ${d}
+       ${m.fixed?" · fijo":""}
+      </small>
+
+     </div>
+
+     <b class="${cls}">
+      ${sign}${money(m.amount)}
+     </b>
+
+    </div>
+
+    <div class="actions">
+
+     <button
+      class="secondary small"
+      onclick="editMove('${m.id}')">
+
+      Editar
+
+     </button>
+
+     <button
+      class="danger small"
+      onclick="deleteMove('${m.id}')">
+
+      Borrar
+
+     </button>
+
+    </div>
+
    </div>
-   <div class="actions">
-    <button class="secondary small" onclick="editMove('${m.id}')">Editar</button>
-    <button class="danger small" onclick="deleteMove('${m.id}')">Borrar</button>
-   </div>
-  </div>`;
- }).join("");
+   `;
+
+  }
+ )
+ .join("");
+
 }
+
+
+/* =========================
+   GASTOS FIJOS
+========================= */
+
 
 function renderFixed(){
- $("fixedList").innerHTML=fixedNames.map(name=>`
- <div class="fixed-item">
-  <div><label>${esc(name)}</label></div>
-  <input class="fixedInput" data-name="${esc(name)}" type="number" min="0" step="0.01"
-         value="${Number(state.fixed[name]||0)}" placeholder="0,00">
- </div>`).join("");
- document.querySelectorAll(".fixedInput").forEach(i=>i.addEventListener("change",()=>{
-   state.fixed[i.dataset.name]=Number(i.value)||0;save();
- }));
+
+ $("fixedList").innerHTML=
+ fixedNames
+ .map(
+  name=>`
+
+  <div class="fixed-item">
+
+   <div>
+
+    <label>
+     ${esc(name)}
+    </label>
+
+   </div>
+
+   <input
+    class="fixedInput"
+    data-name="${esc(name)}"
+    type="number"
+    min="0"
+    step="0.01"
+    value="${Number(state.fixed[name]||0)}"
+    placeholder="0,00">
+
+  </div>
+
+ `
+ )
+ .join("");
+
+
+ document
+ .querySelectorAll(".fixedInput")
+ .forEach(
+  i=>
+  i.addEventListener(
+   "change",
+   ()=>{
+
+    state.fixed[i.dataset.name]=
+    Number(i.value)||0;
+
+    save();
+
+   }
+  )
+ );
+
 }
 
-$("applyFixedBtn").addEventListener("click",()=>{
- const mk=monthKey();
- if(state.appliedMonths.includes(mk)){
-   $("fixedMessage").innerHTML='<div class="notice">Los gastos fijos de este mes ya están aplicados.</div>';return;
- }
- let count=0;
- fixedNames.forEach(name=>{
-   const amount=Number(state.fixed[name]||0);
-   if(amount>0){
-     state.movements.push({id:uid(),date:new Date().toISOString(),type:"expense",
-       amount,description:name,category:name==="Ahorro"?"Otros":"Seguros e impuestos",fixed:true});
-     count++;
-   }
- });
- state.appliedMonths.push(mk);
- $("fixedMessage").innerHTML=`<div class="notice">Se han aplicado ${count} gastos fijos.</div>`;
- save();
-});
 
-$("saveGoal").addEventListener("click",()=>{
- state.goal=Number($("goal").value)||0;state.saved=Number($("saved").value)||0;
- $("goalMessage").innerHTML='<div class="notice">Objetivo guardado.</div>';save();
-});
-$("saveLimit").addEventListener("click",()=>{
- state.leisureLimit=Number($("leisureLimit").value)||0;
- $("limitInfo").innerHTML='<div class="notice">Límite guardado.</div>';save();
-});
+$("applyFixedBtn")
+.addEventListener(
+ "click",
+ ()=>{
+
+  ensurePeriods();
+
+
+  const period=
+  getActivePeriod();
+
+
+  const count=
+  applyFixedToPeriod(
+   period
+  );
+
+
+  $("fixedMessage")
+  .innerHTML=
+  '<div class="notice">'+
+  (
+   count===false
+   ?
+   "Los gastos fijos de este mes ya están aplicados."
+   :
+   "Se han aplicado "+
+   count+
+   " gastos fijos."
+  )+
+  '</div>';
+
+
+  save();
+
+ }
+);
+
+
+/* =========================
+   OBJETIVO
+========================= */
+
+
+$("saveGoal")
+.addEventListener(
+ "click",
+ ()=>{
+
+  state.goal=
+  Number($("goal").value)||0;
+
+
+  state.saved=
+  Number($("saved").value)||0;
+
+
+  $("goalMessage")
+  .innerHTML=
+  '<div class="notice">'+
+  'Objetivo guardado.'+
+  '</div>';
+
+
+  save();
+
+ }
+);
+
+
+/* =========================
+   LIMITE OCIO
+========================= */
+
+
+$("saveLimit")
+.addEventListener(
+ "click",
+ ()=>{
+
+  state.leisureLimit=
+  Number(
+   $("leisureLimit").value
+  )||0;
+
+
+  $("limitInfo")
+  .innerHTML=
+  '<div class="notice">'+
+  'Límite guardado.'+
+  '</div>';
+
+
+  save();
+
+ }
+);
+
+
+/* =========================
+   GRÁFICOS
+========================= */
+
 
 function renderCharts(){
+
  const totals={};
- state.movements.filter(m=>m.type==="expense").forEach(m=>totals[m.category]=(totals[m.category]||0)+m.amount);
- const rows=Object.entries(totals).sort((a,b)=>b[1]-a[1]);
- if(!rows.length){$("charts").innerHTML='<div class="empty">Añade gastos para ver el gráfico.</div>';return}
- const max=Math.max(...rows.map(x=>x[1]),1);
- $("charts").innerHTML=rows.map(([cat,val])=>`
-  <div><b>${esc(cat)}</b> · ${money(val)}
-  <div class="bar"><i style="width:${val/max*100}%"></i></div></div>`).join("");
+
+
+ periodMovements()
+ .filter(
+  m=>m.type==="expense"
+ )
+ .forEach(
+  m=>
+  totals[m.category]=
+  (totals[m.category]||0)
+  +
+  m.amount
+ );
+
+
+ const rows=
+ Object
+ .entries(totals)
+ .sort(
+  (a,b)=>b[1]-a[1]
+ );
+
+
+ if(!rows.length){
+
+  $("charts").innerHTML=
+  '<div class="empty">'+
+  'Añade gastos para ver el gráfico.'+
+  '</div>';
+
+  return;
+
+ }
+
+
+ const max=
+ Math.max(
+  ...rows.map(
+   x=>x[1]
+  ),
+  1
+ );
+
+
+ $("charts").innerHTML=
+ rows
+ .map(
+  ([cat,val])=>
+  `
+  <div>
+
+   <b>
+    ${esc(cat)}
+   </b>
+
+   ·
+   ${money(val)}
+
+   <div class="bar">
+
+    <i
+     style="width:${val/max*100}%">
+    </i>
+
+   </div>
+
+  </div>
+  `
+ )
+ .join("");
+
 }
+
+
+/* =========================
+   LIMITE
+========================= */
+
 
 function renderLimit(){
- const spent=state.movements.filter(m=>m.type==="expense"&&m.category==="Ocio"&&
-   new Date(m.date).getMonth()===new Date().getMonth()&&new Date(m.date).getFullYear()===new Date().getFullYear())
-   .reduce((a,m)=>a+m.amount,0);
- const lim=Number(state.leisureLimit||0);
- $("leisureLimit").value=lim||"";
- if(!lim){$("limitInfo").innerHTML="<p>No hay límite configurado.</p>";return}
- const remaining=lim-spent;
- $("limitInfo").innerHTML=`<div class="notice">Ocio este mes: <b>${money(spent)}</b> de ${money(lim)}.<br>
- ${remaining>=0?"Te quedan "+money(remaining):"Has superado el límite en "+money(Math.abs(remaining))}.</div>`;
+
+ const spent=
+ periodMovements()
+ .filter(
+  m=>
+  m.type==="expense"
+  &&
+  m.category==="Ocio"
+ )
+ .reduce(
+  (a,m)=>a+m.amount,
+  0
+ );
+
+
+ const lim=
+ Number(
+  state.leisureLimit||0
+ );
+
+
+ $("leisureLimit").value=
+ lim||"";
+
+
+ if(!lim){
+
+  $("limitInfo").innerHTML=
+  "<p>No hay límite configurado.</p>";
+
+  return;
+
+ }
+
+
+ const remaining=
+ lim-spent;
+
+
+ $("limitInfo").innerHTML=
+ `
+ <div class="notice">
+
+  Ocio en este mes:
+  <b>${money(spent)}</b>
+  de
+  ${money(lim)}.
+
+  <br>
+
+  ${
+   remaining>=0
+   ?
+   "Te quedan "+money(remaining)
+   :
+   "Has superado el límite en "+
+   money(Math.abs(remaining))
+  }
+
+ </div>
+ `;
+
 }
+
+
+/* =========================
+   OBJETIVO
+========================= */
+
 
 function renderGoal(){
- $("goal").value=state.goal||"";
- $("saved").value=state.saved||"";
-}
-function render(){
- renderSummary();renderMovements();renderFixed();renderCharts();renderLimit();renderGoal();
-}
-$("exportBtn").addEventListener("click",()=>{
- const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
- const a=document.createElement("a");a.href=URL.createObjectURL(blob);
- a.download="mi-ahorro-copia-"+monthKey()+".json";a.click();URL.revokeObjectURL(a.href);
-});
-$("importFile").addEventListener("change",e=>{
- const file=e.target.files[0];if(!file)return;
- const r=new FileReader();
- r.onload=()=>{
-  try{
-   const data=JSON.parse(r.result);
-   if(!data||!Array.isArray(data.movements))throw Error();
-   state=data;save();
-   $("backupMessage").innerHTML='<div class="notice">Copia restaurada correctamente.</div>';
-  }catch{$("backupMessage").innerHTML='<div class="notice">La copia no es válida.</div>'}
- };
- r.readAsText(file);
-});
-$("clearBtn").addEventListener("click",()=>{
- if(!confirm("¿Seguro que quieres borrar TODOS los datos? Esta acción no se puede deshacer."))return;
- localStorage.removeItem(KEY);
- location.reload();
-});
 
-async function loadSharedData(){
-  try{
-    const response=await fetch(
-     `${SUPABASE_URL}/rest/v1/ahorro_data?id=eq.${SUPABASE_ROW}&select=data`,
-      {
-        headers:{
-          "apikey":SUPABASE_KEY,
-          "Authorization":`Bearer ${SUPABASE_KEY}`
-        }
-      }
+ $("goal").value=
+ state.goal||"";
+
+
+ $("saved").value=
+ state.saved||"";
+
+}
+
+
+/* =========================
+   RENDER GENERAL
+========================= */
+
+
+function render(){
+
+ renderPeriods();
+
+ renderSummary();
+
+ renderMovements();
+
+ renderFixed();
+
+ renderCharts();
+
+ renderLimit();
+
+ renderGoal();
+
+}
+
+
+/* =========================
+   COPIA DE SEGURIDAD
+========================= */
+
+
+$("exportBtn")
+.addEventListener(
+ "click",
+ ()=>{
+
+  const blob=
+  new Blob(
+   [
+    JSON.stringify(
+     state,
+     null,
+     2
+    )
+   ],
+   {
+    type:"application/json"
+   }
+  );
+
+
+  const a=
+  document.createElement("a");
+
+
+  a.href=
+  URL.createObjectURL(
+   blob
+  );
+
+
+  a.download=
+  "mi-ahorro-copia.json";
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(
+   a.href
+  );
+
+ }
+);
+
+
+/* =========================
+   IMPORTAR
+========================= */
+
+
+$("importFile")
+.addEventListener(
+ "change",
+ e=>{
+
+  const file=
+  e.target.files[0];
+
+
+  if(!file)
+  return;
+
+
+  const r=
+  new FileReader();
+
+
+  r.onload=
+  ()=>{
+
+   try{
+
+    const data=
+    JSON.parse(
+     r.result
     );
 
-    if(!response.ok) throw new Error("No se pudieron cargar los datos");
 
-    const rows=await response.json();
+    if(
+     !data
+     ||
+     !Array.isArray(
+      data.movements
+     )
+    )
+    throw Error();
 
-    if(rows.length && rows[0].data){
-      state=rows[0].data;
-      localStorage.setItem(KEY,JSON.stringify(state));
+
+    state=data;
+
+
+    ensurePeriods();
+
+
+    save();
+
+
+    $("backupMessage")
+    .innerHTML=
+    '<div class="notice">'+
+    'Copia restaurada correctamente.'+
+    '</div>';
+
+
+   }catch{
+
+    $("backupMessage")
+    .innerHTML=
+    '<div class="notice">'+
+    'La copia no es válida.'+
+    '</div>';
+
+   }
+
+  };
+
+
+  r.readAsText(file);
+
+ }
+);
+
+
+/* =========================
+   BORRAR
+========================= */
+
+
+$("clearBtn")
+.addEventListener(
+ "click",
+ ()=>{
+
+  if(
+   !confirm(
+    "¿Seguro que quieres borrar TODOS los datos? Esta acción no se puede deshacer."
+   )
+  )
+  return;
+
+
+  localStorage.removeItem(
+   KEY
+  );
+
+
+  location.reload();
+
+ }
+);
+
+
+/* =========================
+   CARGAR SUPABASE
+========================= */
+
+
+async function loadSharedData(){
+
+ try{
+
+  const response=
+  await fetch(
+   `${SUPABASE_URL}/rest/v1/ahorro_data?id=eq.${SUPABASE_ROW}&select=data`,
+   {
+    headers:{
+     "apikey":SUPABASE_KEY,
+     "Authorization":
+     `Bearer ${SUPABASE_KEY}`
     }
+   }
+  );
 
-    render();
-  }catch(e){
-    console.error("Error cargando Supabase:",e);
-    render();
+
+  if(!response.ok)
+  throw new Error(
+   "No se pudieron cargar los datos"
+  );
+
+
+  const rows=
+  await response.json();
+
+
+  if(
+   rows.length
+   &&
+   rows[0].data
+  ){
+
+   state=
+   rows[0].data;
+
+
+   ensurePeriods();
+
+
+   localStorage.setItem(
+    KEY,
+    JSON.stringify(state)
+   );
+
   }
+
+
+  ensurePeriods();
+
+
+  render();
+
+
+ }catch(e){
+
+  console.error(
+   "Error cargando Supabase:",
+   e
+  );
+
+
+  ensurePeriods();
+
+
+  render();
+
+ }
+
 }
 
+
+/* =========================
+   INICIO
+========================= */
+
+
+ensurePeriods();
+
 updateCategories();
+
+render();
+
 loadSharedData();
+
 </script>
+
 </body>
 </html>
