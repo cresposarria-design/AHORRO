@@ -60,13 +60,22 @@ function periodDefaultLabel(iso){return "Mes desde "+new Date(iso).toLocaleDateS
 
 function ensurePeriods(){
  if(!Array.isArray(state.periods))state.periods=[];
+ if(!Array.isArray(state.movements))state.movements=[];
  if(!state.periods.length){
   const id="period-"+uid(),firstDate=state.movements.length?[...state.movements].sort((a,b)=>new Date(a.date)-new Date(b.date))[0].date:new Date().toISOString();
   state.periods=[{id,label:periodDefaultLabel(firstDate),startDate:firstDate,fixedApplied:false,createdAt:new Date().toISOString()}];
-  state.activePeriodId=id;state.movements.forEach(m=>{if(!m.periodId)m.periodId=id});
+  state.activePeriodId=id;
  }
  if(!state.activePeriodId||!state.periods.some(p=>p.id===state.activePeriodId))state.activePeriodId=state.periods[state.periods.length-1].id;
- state.movements.forEach(m=>{if(!m.periodId)m.periodId=state.periods[0].id});
+ // Reparar movimientos antiguos mal asociados: cada movimiento pertenece al periodo
+ // cuya fecha de inicio sea la más reciente que no supere la fecha del movimiento.
+ const sorted=[...state.periods].sort((a,b)=>new Date(a.startDate)-new Date(b.startDate));
+ state.movements.forEach(m=>{
+  let owner=sorted[0];
+  const movementDate=new Date(m.date||m.createdAt||owner.startDate);
+  for(const p of sorted){if(new Date(p.startDate)<=movementDate)owner=p;else break;}
+  if(!m.periodId||!state.periods.some(p=>p.id===m.periodId)||m.periodId!==owner.id)m.periodId=owner.id;
+ });
 }
 function getActivePeriod(){ensurePeriods();return state.periods.find(p=>p.id===state.activePeriodId)||state.periods[0]}
 function periodMovements(){return state.movements.filter(m=>m.periodId===getActivePeriod().id)}
@@ -95,7 +104,7 @@ function startNewPeriod(dateText){
  state.periods.push(period);state.activePeriodId=period.id;const count=applyFixedToPeriod(period);
  $("periodMessage").innerHTML='<div class="notice">Nuevo mes iniciado. '+count+' gastos fijos añadidos.</div>';save();
 }
-$("periodSelect").addEventListener("change",e=>{state.activePeriodId=e.target.value;render()});
+$("periodSelect").addEventListener("change",e=>{state.activePeriodId=e.target.value;save()});
 $("startPeriodBtn").addEventListener("click",()=>startNewPeriod());
 $("todayPeriodBtn").addEventListener("click",()=>startNewPeriod(new Date().toISOString().slice(0,10)));
 
@@ -155,8 +164,10 @@ async function loadSharedData(){
   const response=await fetch(`${SUPABASE_URL}/rest/v1/ahorro_data?id=eq.${SUPABASE_ROW}&select=data`,{headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`}});
   if(!response.ok)throw new Error("No se pudieron cargar los datos");
   const rows=await response.json();
-  if(rows.length&&rows[0].data){state=rows[0].data;ensurePeriods();localStorage.setItem(KEY,JSON.stringify(state))}
+  let repaired=false;
+  if(rows.length&&rows[0].data){state=rows[0].data;const before=JSON.stringify(state);ensurePeriods();repaired=JSON.stringify(state)!==before;localStorage.setItem(KEY,JSON.stringify(state))}
   ensurePeriods();render();
+  if(repaired)await save();
  }catch(e){console.error("Error cargando Supabase:",e);ensurePeriods();render()}
 }
 ensurePeriods();render();loadSharedData();
